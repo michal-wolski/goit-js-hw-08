@@ -5,25 +5,27 @@ const form = document.querySelector('.feedback-form')
 const email = document.getElementsByName('email')
 const message = document.getElementsByName('message')
 
-
-
-// form.addEventListener('input', throttle(formLisiner, 500));
-
-form.addEventListener("input", (ev) => {
+const formLisiner = (ev) => {
     ev.preventDefault();
     const {
         elements: {email, message}
     } = form;
     localStorage.setItem('feedback-form-state', JSON.stringify({email: email.value,message: message.value}))
-    
-});
+}
 
-console.log(form.email.value);
-// const formLisiner = (ev) => {
-//     ev.preventDefault();
-//     const {
-//         elements: {email, message}
-//     } = ev.currentTarget;
-//     localStorage.setItem('feedback-form-state', JSON.stringify({email: email.value,message: message.value}))
-// }
+form.addEventListener('input', throttle(formLisiner, 500));
+
+const storageValue = localStorage.getItem('feedback-form-state');
+const storageValueParse = JSON.parse(storageValue)
+console.log(storageValueParse);
+
+function checkForm (email, message, storageValueParse) {
+    if (email && message !== '') {
+        email.value = storageValueParse.email;
+        message.value = storageValueParse.message;
+    }
+}
+
+form.addEventListener('input', throttle(checkForm, 500))
+
 
