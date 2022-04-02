@@ -1,10 +1,11 @@
 import throttle from "lodash.throttle";
 
-
+//DOM Import
 const form = document.querySelector('.feedback-form')
-const email = document.getElementsByName('email')
-const message = document.getElementsByName('message')
+const email = document.querySelector('input');
+const message = document.querySelector('textarea');
 
+//Export data do localstorage
 const formLisiner = (ev) => {
     ev.preventDefault();
     const {
@@ -13,64 +14,41 @@ const formLisiner = (ev) => {
     localStorage.setItem('feedback-form-state', JSON.stringify({email: email.value,message: message.value}))
 }
 
+//Listener for export data do localstorage
 form.addEventListener('input', throttle(formLisiner, 500));
 
+//JSON get and parse
 const storageValue = localStorage.getItem('feedback-form-state');
 const storageValueParse = JSON.parse(storageValue)
-// const inputVal = localStorage.getItem('feedback-form-state');
-// const parsedInputVal = JSON.parse(inputVal);
-// if (parsedInputVal) {
-//     if (parsedInputVal && parsedInputVal.email !== '') {
-//       email.value = parsedInputVal.email;
-//     }
-//   }  
-  
-//   if (parsedInputVal) {
-//     if (parsedInputVal && parsedInputVal.message !== '') {
-//       message.value = parsedInputVal.message;
-//     }
-//   }  
-  
-  
-  
-//   const submitHandler = (event) => {
-//     event.preventDefault();
-  
-//     const {
-//       elements: { email, message },
-//     } = form;
-    
-//     console.log(`Email: ${email.value}, Message: ${message.value}`);
-    
-//     form.reset();
-    
-//     localStorage.removeItem('feedback-form-state');
-//   }
-  
-//   form.addEventListener('submit', submitHandler);
 
-
-
-
-
+//Checking form function 
 function formCheck () {
-    const formEmail = document.getElementsByName('email');
-    const formMessage = document.getElementsByName('message');
-    const storageValue = localStorage.getItem('feedback-form-state');
-    const storageValueParse = JSON.parse(storageValue)
-
-    if (localStorage.getItem('feedback-form-state') !== null) {
-        formMessage.value = storageValueParse.message;
-        console.log(storageValueParse.message);
-    }
+        if (storageValueParse && storageValueParse.email !== '') {
+            email.value = storageValueParse.email;
+        }
+       
+        if (storageValueParse && storageValueParse.message !== '') {
+          message.value = storageValueParse.message;
+        }
 }
 
+//Listener for import date to form
+window.addEventListener('load', throttle(formCheck, 1));
 
-// if (email === "") {
-//     email.value = storageValueParse.email
-// }
+//Console log email and passoword,reset form and remove data from local storage
+const submitReset = (event) => {
+    event.preventDefault();
+  
+    const {
+      elements: { email, message },
+    } = form;
+    
+    console.log(`Email: ${email.value}, Message: ${message.value}`);
+    
+    form.reset();
+    
+    localStorage.removeItem('feedback-form-state');
+  }
 
-
-window.addEventListener('mousemove', throttle(formCheck, 1000));
-
-
+//Listener for submit
+form.addEventListener('submit', submitReset);
