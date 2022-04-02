@@ -4,4 +4,4 @@ var t=arguments[3],n="Expected a function",e=NaN,i="[object Symbol]",r=/^\s+|\s+
 },{}],"TTyb":[function(require,module,exports) {
 "use strict";var e=t(require("lodash.throttle"));function t(e){return e&&e.__esModule?e:{default:e}}const a=document.querySelector(".feedback-form"),s=document.querySelector("input"),l=document.querySelector("textarea"),o=e=>{e.preventDefault();const{elements:{email:t,message:s}}=a;localStorage.setItem("feedback-form-state",JSON.stringify({email:t.value,message:s.value}))};a.addEventListener("input",(0,e.default)(o,500));const r=localStorage.getItem("feedback-form-state"),n=JSON.parse(r);function u(){n&&""!==n.email&&(s.value=n.email),n&&""!==n.message&&(l.value=n.message)}window.addEventListener("load",(0,e.default)(u,1));const m=e=>{e.preventDefault();const{elements:{email:t,message:s}}=a;console.log(`Email: ${t.value}, Message: ${s.value}`),a.reset(),localStorage.removeItem("feedback-form-state")};a.addEventListener("submit",m);
 },{"lodash.throttle":"FNyO"}]},{},["TTyb"], null)
-//# sourceMappingURL=/parcel-project-template/03-feedback.51cb999f.js.map
+//# sourceMappingURL=/goit-js-hw-08/03-feedback.51cb999f.js.map
